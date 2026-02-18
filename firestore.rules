@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Admin authentication required for all operations
+    match /{document=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Public read access for library files display
+    match /library/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Forms can be written by anyone, read by admin only
+    match /forms/{document=**} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow write: if true;
+    }
+    
+    // Notifications - admin only
+    match /notifications/{document=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Logs - admin only
+    match /logs/{document=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Territoriali - admin only
+    match /territoriali/{document=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}
