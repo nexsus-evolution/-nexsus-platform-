@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXSUS - Evolution Future</title>
+    <style>
+        /* CSS VARIABILI OBBLIGATORIE */
+        :root {
+            --grad: linear-gradient(90deg, #2aff40 0%, #ffd21a 20%, #00c8ff 40%, #0070ff 55%, #9c27ff 70%, #ff7b00 85%, #f9ff00 100%);
+            --matrix-green: #32ff32;
+            --matrix-cyan: #00ffff;
+            --bg-dark: #000000;
+            --text-light: #ffffff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* MATRIX CANVAS */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        
+        /* LOGO NEXSUS */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .main-logo {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 30px;
+        }
+        
+        .logo-x {
+            font-size: clamp(200px, 15vw, 400px);
+            font-weight: 900;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: waveColors 6s ease-in-out infinite;
+        }
+        
+        .logo-nexsus {
+            display: flex;
+        }
+        
+        .logo-nexsus .letter {
+            font-size: clamp(100px, 8vw, 200px);
+            font-weight: 900;
+            background: linear-gradient(45deg, #2aff40 0%, #00c8ff 25%, #0070ff 50%, #9c27ff 75%, #ff7b00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: waveColors 6s ease-in-out infinite, hola 1.5s ease-in-out infinite;
+        }
+        
+        .subtitle {
+            font-size: clamp(16px, 2vw, 24px);
+            color: #00c8ff;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .evolution-future {
+            font-size: clamp(24px, 4vw, 48px);
+            font-weight: 900;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: waveColors 6s ease-in-out infinite;
+        }
+        
+        .community-subtitle {
+            font-size: clamp(14px, 1.5vw, 18px);
+            color: #2aff40;
+            font-weight: 500;
+            max-width: 800px;
+        }
+        
+        @keyframes waveColors {
+            0% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(180deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        @keyframes hola {
+            0% { filter: brightness(0.85); }
+            50% { filter: brightness(1.1); }
+            100% { filter: brightness(0.85); }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .main-logo { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Animation Background -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Main Content -->
+    <main>
+        <section class="logo-container">
+            <div class="main-logo">
+                <div class="logo-x">X</div>
+                <div class="logo-nexsus">
+                    <span class="letter" style="animation-delay: 0.1s;">N</span>
+                    <span class="letter" style="animation-delay: 0.2s;">E</span>
+                    <span class="letter" style="animation-delay: 0.3s;">X</span>
+                    <span class="letter" style="animation-delay: 0.4s;">S</span>
+                    <span class="letter" style="animation-delay: 0.5s;">U</span>
+                    <span class="letter" style="animation-delay: 0.6s;">S</span>
+                </div>
+            </div>
+            <div class="subtitle">next level - vision - strategy - future</div>
+            <div class="evolution-future">EVOLUTION FUTURE</div>
+            <div class="community-subtitle">CAMBIARE LA TUA VISIONE, SARÀ LA NOSTRA MISSIONE</div>
+        </section>
+    </main>
+
+    <script>
+        // Matrix Animation
+        class MatrixAnimation {
+            constructor() {
+                this.canvas = document.getElementById('matrix-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                this.fontSize = 14;
+                this.columns = 0;
+                this.drops = [];
+                this.init();
+                this.animate();
+            }
+
+            init() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.columns = Math.floor(this.canvas.width / this.fontSize);
+                this.drops = Array(this.columns).fill(1);
+            }
+
+            animate() {
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.font = this.fontSize + 'px monospace';
+
+                for (let i = 0; i < this.drops.length; i++) {
+                    const text = this.characters[Math.floor(Math.random() * this.characters.length)];
+                    this.ctx.fillStyle = Math.random() > 0.5 ? '#32ff32' : '#00ffff';
+                    this.ctx.fillText(text, i * this.fontSize, this.drops[i] * this.fontSize);
+
+                    if (this.drops[i] * this.fontSize > this.canvas.height && Math.random() > 0.975) {
+                        this.drops[i] = 0;
+                    }
+                    this.drops[i]++;
+                }
+
+                setTimeout(() => {
+                    requestAnimationFrame(() => this.animate());
+                }, 80);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new MatrixAnimation();
+        });
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('matrix-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
